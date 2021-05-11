@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Line } from "react-chartjs-2";
+import { Bubble} from "react-chartjs-2";
 import "./LineGraph.css"
 
 
-const options = {
+let options;
+options = {
     legend: {
-        display: false,
+        display: "StockPrice",
     },
     hover: {
         intersect: false
@@ -23,13 +24,16 @@ const options = {
     tooltips: {
         mode: "index",
         intersect: false,
-        callbacks: {
-        },
+        callbacks: {},
     },
     scales: {
         xAxes: [
             {
-                type: "time",
+                type: "date",
+                gridLines: {
+                    display: true,
+                    drawborder: false,
+                },
                 time: {
                     format: "MM/DD/YY",
                     tooltipFormat: "ll",
@@ -43,7 +47,7 @@ const options = {
             {
                 gridLines: {
                     display: false,
-                    drawborder:false,
+                    drawborder: false,
                 },
                 ticks: {
                     display: false,
@@ -64,7 +68,7 @@ function LineGraph() {
             let date = new Date();
             date.setHours(0,0,0,0);
             date.setDate(i);
-            value += Math.round((Math.random() < 0.5 ? 1 : 0) * Math.random() * 10);
+            value += Math.round((Math.random() < 0.5 ? 1 : 2) * Math.random(date) * 10);
             data.push({x: date, y: value});
         }
         setData(data)
@@ -73,7 +77,7 @@ function LineGraph() {
     return (
         <div className="linegraph">
             {data?.length > 0 && (
-                <Line
+                <Bubble
                     data={{
                         datasets: [
                             {
